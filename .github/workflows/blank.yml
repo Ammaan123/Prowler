@@ -5,7 +5,6 @@ on:
       environment:
         description: 'Select the environment to run the workflow'
         required: true
-        default: 'development'  # Optional: set a default value
         options:
           - production
           - staging
@@ -35,7 +34,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: ${{ secrets.AWSROLETOASSUME }}  
+          role-to-assume: ${{ secrets.AWSROLETOASSUME }}  # Using the secret here
           role-session-name: OIDCSession
           aws-region: ${{ env.awsRegion }}
           role-duration-seconds: ${{ env.awsIamRoleSessionDuration }}
