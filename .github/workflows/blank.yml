@@ -2,15 +2,16 @@ name: Prowler for AWS Organization to Security Hub
 on:
   workflow_dispatch:
     inputs:
-    environment123:
-    required: true
-    type: choice
-    description: 'Select Environment name'
-    options:
+      environment:
+        required: true
+        type: choice
+        description: 'Select Environment name'
+        options:
           - 
           - production
-          - staging
           - development
+          - staging
+          
 
 env:
   awsRegion: us-east-1
@@ -24,6 +25,7 @@ permissions:
 jobs:
   run-prowler:
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}  
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -41,6 +43,9 @@ jobs:
           aws-region: ${{ env.awsRegion }}
           role-duration-seconds: ${{ env.awsIamRoleSessionDuration }}
         
+      - name: Verify AWS Credentials
+        run: aws sts get-caller-identity
+        
       - name: Install Prowler
         run: |
           pip install prowler
@@ -51,6 +56,9 @@ jobs:
           prowler aws --services s3 ec2 --security-hub
         continue-on-error: true
         
+      - name: Debug Environment Variables
+        run: env
+
       - name: Completion Message
         run: |
-          echo "Prowler run completed in environment: ${{ github.event.inputs.environment }}"
+          echo "Prowler run completed in environment: ${{ github.event.inputs.environment123 }}"
