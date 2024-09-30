@@ -54,7 +54,7 @@ jobs:
       - name: Run Prowler and send findings to Security Hub
         run: |
           prowler aws -z  --services s3 ec2 --security-hub
-        continue-on-error: true
+        continue-on-error: false
         
       - name: Debug Environment Variables
         run: env
