@@ -1,17 +1,6 @@
 name: Prowler for AWS Organization to Security Hub
 on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        required: true
-        type: choice
-        description: 'Select Environment name'
-        options:
-          - 
-          - production
-          - development
-          - staging
-          
+ push:
 
 env:
   awsRegion: us-east-1
