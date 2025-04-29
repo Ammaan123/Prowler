@@ -1,1 +1,1 @@
-jadu ko mene kaam skhaah
+Amaan ki mene jkdjkkldh
